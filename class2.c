@@ -97,3 +97,37 @@ int main () {
 }
 */
 
+/*
+#include <stdio.h>
+
+int main () {
+	char msg[] = "Good bye yellow brick road~1\n";
+	char *p = msg;
+	
+	printf("배열 이름을 이용한 출력 : %s", msg);
+	printf("포인터 변수를 이용한 출력: %s", p);
+	
+	return 0;
+} 
+*/
+
+/*
+#include <stdio.h>
+
+#define PRPTR(p) printf(#p " = %p\n", p)
+
+int main () {
+	int nums[] = {1,3,2,4,3,5,4,2};
+	int *a = nums;
+	int *b = a+4;
+	
+	printf("sizeof(int) = %d\n", sizeof(int));
+	PRPTR(a+0);
+	PRPTR(a+1);
+	PRPTR(b-2);
+	PRPTR(b-1);
+	
+	return 0;
+}*/
+
+
