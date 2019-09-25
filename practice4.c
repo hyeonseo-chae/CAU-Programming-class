@@ -62,7 +62,8 @@ int main () {
 
 				}
 			}
-			else if(words[i][1]<=57&&words[i][1]>=48){
+			else if(words[i][1]==46){
+				if(words[i][j]<=57&&words[i][j]>=48){
 				if(m==4 || m==9){
 					m = 4;
 				}
@@ -72,6 +73,18 @@ int main () {
 
 				}
 			}
+			}
+			}
+			else if (words[i][j]==43||words[i][j]==45){
+				if(m==4 || m==9 || m==3){
+					m = 3;
+				}
+				else{
+				
+				m=0;
+
+				}
+				
 			}
 				
 				
