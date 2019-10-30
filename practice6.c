@@ -27,16 +27,16 @@ void main(){
 	scanf("%d",&a);
 	fflush(stdin);
 	switch (a){
-		case 1: one(); break;
-		case 2: two(); break;
-		case 3: three(); break;
-		case 4: four(); break;
+		case 1: one(&a1); break;
+		case 2: two(&a1); break;
+		case 3: three(&a1); break;
+		case 4: four(&a1); break;
 		case 0: exit(0); break;
 	}
 }	
 
 
-	return 0;
+
 }
 
 void one(Sperson *a1) {
