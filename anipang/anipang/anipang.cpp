@@ -39,10 +39,15 @@ void gameInit(Board *board)
 
 // curr: 마우스가 클릭된 타일 위치를 알려준다.
 // move: 마우스가 움직인 방향을 알려준다. (0, 1), (0, -1), (1, 0), (-1, 0) 중의 하나이다.
-void mouseMotion(Board *board, int tile[2], int move[2])
+void mouseMotion(Board* board, int tile[2], int move[2])
 {
 	// 마우스를 이용하여 타일을 움직였을 때 해당 내용을 구현해야 한다
 	printf("(%d, %d) move by (%d, %d)\n", tile[0], tile[1], move[0], move[1]); // 디버깅 코드. 지워도 됩니다.
+	int swap1;
+	swap1 = board->tiles[tile[1]][tile[0]];
+	board->tiles[tile[1]][tile[0]] =board->tiles[tile[1]+move[1]][tile[0]+move[0]];
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = swap1;
+	
 }
 
 
@@ -66,6 +71,9 @@ void testRemove(Board *board)
     }
 }
 
+void check_three(Board* board,int tile[2],int move[2]) {
+
+}
 
 
 int main(int argc, char** argv)
