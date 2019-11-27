@@ -25,6 +25,7 @@ COORD MenuAIPos = { 0, 17 };
 int command = 0;
 
 COORD messageposition = { 34,20 };
+char AILevel[][7] = { "random", "dumber", "dumb", "smart" };
 int board[3][3] = { {0,0,0},{0,0,0},{0,0,0} };
 int boardpattern[8][3] = { 0 };
 int heuristicNum[5] = { 1000,100,15,10,1 };
@@ -34,6 +35,7 @@ void menuSelection();
 void GameAgainMessage();
 void GameDrawMessage();
 void finish();
+void selectAI();
 
 int isGameFinished(char OX);
 int isEmptyBox(int input);
@@ -117,13 +119,13 @@ void drawboard() {
 }
 
 void drawmenu() {
-	char* str[3] = { "Play First\n","Play Second\n", "Exit\n" };
+	char* str[5] = { "Play First\n","Play Second\n","Computer vs Computer\n", "Select AI\n", "Exit\n" };
 
 	
 	system("mode con cols=80 lines=27");
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), MenuPos);
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 5; i++) {
 		printf("%d: %s", i + 1, str[i]);
 	}
 	
@@ -141,7 +143,14 @@ void menuSelection() {
 		drawboard();
 		PlayComputerFirst();
 	}
-	
+	else if (command == 3) {
+		drawboard();
+		comvscom();
+	}
+	else if (command == 4) {
+		selectAI();
+		menuSelection();
+	}
 	else if (command == 0) {
 		finish();
 	}
@@ -209,6 +218,7 @@ void HumanTurn(char OX) {
 	int input = 0;
 	while (1) {
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CommandPos);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		printf("Your turn :        ");
 		scanf("%d", &input);
 		if (isEmptyBox(input)) {
@@ -395,7 +405,7 @@ void random(char OX) {
 	
 	Sleep(1000);
 	printf("%c", OX);
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	
 	board[row][column] = OX;
 }
 
@@ -417,58 +427,46 @@ void dumber() {
 	printf("컴퓨터가 두는중...");
 	Sleep(1000);
 	
-	COORD pos = { -1, -1 };
-	pos = checkTwoBox('O');
-	if (pos.X != -1 && pos.Y != -1) {
-		PutLetter('O', pos.X, pos.Y);
-		return;
-	}
 	
-	pos = checkTwoBox('X');
-	if (pos.X != -1 && pos.Y != -1) {
-		PutLetter('O', (int)pos.X, (int)pos.Y);
-		return;
-	}
 
-	if (isEmptyBox(5)) {
-		PutLetter('O', 1, 1);
+	if (isEmptyBox(1)) {
+		PutLetter('O', 0, 0);
 		return;
 	}
 	else if (isEmptyBox(2)) {
 		PutLetter('O', 0, 1);
 		return;
 	}
+	else if (isEmptyBox(3)) {
+		PutLetter('O', 0, 2);
+		return;
+	}
 	else if (isEmptyBox(4)) {
 		PutLetter('O', 1, 0);
 		return;
 	}
+	else if (isEmptyBox(5)) {
+		PutLetter('O', 1, 1);
+		return;
+	}
 	else if (isEmptyBox(6)) {
-		PutLetter('O', 1, 2);
-		return;
-	}
-	else if (isEmptyBox(8)) {
-		PutLetter('O', 2, 1);
-		return;
-	}
-	else if (isEmptyBox(1)) {
-		PutLetter('O', 0, 0);
+		PutLetter('O',1, 2);
 
-		return;
-	}
-	else if (isEmptyBox(3)) {
-		PutLetter('O', 0, 2);
 		return;
 	}
 	else if (isEmptyBox(7)) {
 		PutLetter('O', 2, 0);
 		return;
 	}
+	else if (isEmptyBox(8)) {
+		PutLetter('O', 2, 1);
+		return;
+	}
 	else if (isEmptyBox(9)) {
 		PutLetter('O', 2, 2);
 		return;
 	}
-	//2 4 6 8
-	//1 3 7 9
+	
 
 }
 
@@ -585,6 +583,18 @@ COORD checkBoxForHeuristic(char OX, int charnum, int ranking) {
 }
 
 void calcHeuristicCell() {
+	COORD pos = { -1, -1 };
+	pos = checkTwoBox('O');
+	if (pos.X != -1 && pos.Y != -1) {
+		PutLetter('O', pos.X, pos.Y);
+		return;
+	}
+
+	pos = checkTwoBox('X');
+	if (pos.X != -1 && pos.Y != -1) {
+		PutLetter('O', (int)pos.X, (int)pos.Y);
+		return;
+	}
 	
 	if (checkBoxForHeuristic('O', 2, 0).X != -1 && checkBoxForHeuristic('O', 2, 0).Y != -1) {
 		COORD a = checkBoxForHeuristic('O', 2, 0);
@@ -703,9 +713,10 @@ void dumb() {
 
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CommandPos);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-	printf("                              ");
+	printf("                                                                 ");
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CommandPos);
-	printf("#$%#$#%");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	printf("컴퓨터가 두는중 ...");
 	Sleep(1000);
 	PutLetter('O', x, y);
 }
@@ -724,7 +735,7 @@ void ComputerTurn() {
 		break;
 	case 2: dumb();
 		break;
-	case 3: smart();
+	case 3: smart(); 
 		break;
 	}
 	if (isGameFinished('O')) {
@@ -741,9 +752,9 @@ void GameAgainMessage()
 
 	while (1) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), GameAgainPos);
-		printf("Game Menu(1), Quit(0):                          ");
+		printf("                                                               ");
+		printf("Game Menu(1), Quit(0):");
 		scanf("%d", &input);
 		if (input == 1) {
 			system("cls");
@@ -804,6 +815,19 @@ void comvscom() {
 	ComputerTurn();
 	GameDrawMessage();
 	GameAgainMessage();
+}
+
+void selectAI() {
+	drawmenu();
+	char AILevel[][7] = { "random", "dumber", "dumb", "smart" };
+
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), MenuAIPos);
+	printf("AI selection\n");
+	for (int i = 0; i < 4; i++) {
+		printf("%d: %s\n", i, AILevel[i]);
+	}
+	printf("\nEnter Command :");
+	scanf("%d", &mode);
 }
 
 

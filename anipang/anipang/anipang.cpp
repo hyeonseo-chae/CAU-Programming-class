@@ -11,6 +11,8 @@
 #include "draw.h"
 
 
+void check_three(Board *board,int tile[2],int move[2]);
+
 void mkBoard(Board *board, int xsize, int ysize, int nitems)
 {
 	int i, j;
@@ -41,12 +43,15 @@ void gameInit(Board *board)
 // move: 마우스가 움직인 방향을 알려준다. (0, 1), (0, -1), (1, 0), (-1, 0) 중의 하나이다.
 void mouseMotion(Board* board, int tile[2], int move[2])
 {
+	
 	// 마우스를 이용하여 타일을 움직였을 때 해당 내용을 구현해야 한다
 	printf("(%d, %d) move by (%d, %d)\n", tile[0], tile[1], move[0], move[1]); // 디버깅 코드. 지워도 됩니다.
 	int swap1;
 	swap1 = board->tiles[tile[1]][tile[0]];
 	board->tiles[tile[1]][tile[0]] =board->tiles[tile[1]+move[1]][tile[0]+move[0]];
-	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = swap1;
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = swap1; //swqp으로 마우스 드래그 전환
+	Sleep(100);
+	check_three(board, tile, move);
 	
 }
 
@@ -72,7 +77,34 @@ void testRemove(Board *board)
 }
 
 void check_three(Board* board,int tile[2],int move[2]) {
-
+	
+	if (board->tiles[tile[1]+move[1]][tile[0]+move[0]] == board->tiles[tile[1] + move[1]][tile[0] - 1+move[0]] && board->tiles[tile[1] + move[1]][tile[0]-1+move[0]] == board->tiles[tile[1] + move[1]][tile[0]-2+move[0]]) {
+		printf("왼쪽 3개 일치합니다.\n"); // 왼쪽으로 드래그 후 드래그 기준 왼쪽 3개 판단
+		
+	}
+	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]][tile[0] +1 + move[0]] && board->tiles[tile[1] + move[1]][tile[0] +1 + move[0]] == board->tiles[tile[1] + move[1]][tile[0] +2 + move[0]]) {
+		printf("오른쪽 3개 일치합니다.\n"); // 오른쪽으로 드래그 후 드래그 기준 오른쪽 3개 판단
+	}
+	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]][tile[0] + move[0]+1] && board->tiles[tile[1] + move[1]][tile[0] -1 + move[0]] == board->tiles[tile[1] + move[1]][tile[0] + move[0]]) {
+		printf("가로 가운대 3개 일치합니다.\n"); // 위아래로 드래그 후 드래그 기준 가운데 3개 판단
+	}
+	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]-1][tile[0]+ move[0]] && board->tiles[tile[1] + move[1]-1][tile[0] + move[0]] == board->tiles[tile[1] + move[1]-2][tile[0] + move[0]]) {
+		printf("위쪽 3개 일치합니다.\n"); // 옆으로 드래그 후 드래그 기준 위쪽 3개 판단
+	}
+	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]+1][tile[0] + move[0]] && board->tiles[tile[1] + move[1]+1][tile[0] + move[0]] == board->tiles[tile[1] + move[1]+2][tile[0] + move[0]]) {
+		printf("아래쪽 3개 일치합니다.\n"); //옆으로 드래그 후 드래그 기준 아래 3개 판단
+	}
+	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1] + 1][tile[0] + move[0]] && board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1] +-1][tile[0] + move[0]]) {
+		printf("세로 가운데 3개 일치합니다.\n"); //옆 드래그 후 드래그 기준 세로 가운데 3개 판단
+	}
+	else {
+		Sleep(400);
+		int swap1;
+		swap1 = board->tiles[tile[1] + move[1]][tile[0] + move[0]];
+		board->tiles[tile[1] + move[1]][tile[0] + move[0]] = board->tiles[tile[1]][tile[0]];
+		board->tiles[tile[1]][tile[0]] = swap1;
+	}
+	return;
 }
 
 
