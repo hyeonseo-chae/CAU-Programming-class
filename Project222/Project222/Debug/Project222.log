@@ -1,0 +1,9 @@
+﻿  소스.c
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(37,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(57,30): warning C4047: '=': 'char'의 간접 참조 수준이 'char *'과(와) 다릅니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(62,19): warning C4047: '=': 'int'의 간접 참조 수준이 'char *'과(와) 다릅니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(65,39): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(65,39): warning C4024: 'strcpy': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(66,42): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Project222\소스.c(66,42): warning C4024: 'strcpy': 형식 및 실제 매개 변수 2의 형식이 서로 다릅니다.
+  Project222.vcxproj -> C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\Project222\Debug\Project222.exe
