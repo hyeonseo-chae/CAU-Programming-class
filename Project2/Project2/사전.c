@@ -1,78 +1,146 @@
 #define _CRT_SECURE_NO_WARNINGS
-
-#define MAX_WORDLEN 99999
-#define MAX_MEANING 99999
-#define MAX_WORDS 9999
 #include <stdio.h>
 #include <stdlib.h> //for exit(1)	
 #include <string.h>
-
+#include<windows.h>
 #include <ctype.h>
 
+
+
+#define MAX_WORDLEN 9999
+#define MAX_MEANING 9999
+#define MAX_WORDS 20000
+
+
 typedef struct _word {
-	char word[MAX_WORDLEN];
+	char word[MAX_WORDLEN] ;
 	char meaning[MAX_MEANING];
 } Sword;
 
 Sword dictionary[MAX_WORDS];
+
+char buffer[300], word[20];
 int nwords = 0;
 int ff = 0;
-/*char *ptr = strtok(s1, " ");      // " " 공백 문자를 기준으로 문자열을 자름, 포인터 반환
 
-    while (ptr != NULL)               // 자른 문자열이 나오지 않을 때까지 반복
-    {
-        printf("%s\n", ptr);          // 자른 문자열 출력
-        ptr = strtok(NULL, " ");      // 다음 문자열을 잘라서 포인터를 반환
-    }*/
-
-int main()
-{
+void list();
+void search();
+int line_num = 0;
+int main() {
+	int nn;
 	FILE* fp;
-	char buffer[300], word[20];
-	int line_num = 0;
 	char fname[30] = "voca13000.txt";
-	printf("검색할 단어는 ? : ");
-	scanf("%s", word);
-int i;
-	for ( i = 0; i < strlen(word); i++)
+	fp = fopen(fname, "r");
+	
+
+
+	char* ptr;
+
+
+	while (1) {
+
+
+		if (fgets(buffer, 300, fp)) {
+			ptr = strtok(buffer, "\t");
+
+			int kk = 0;
+			while (ptr != NULL)			//strtok으로 잘린 문자
+			{
+
+				strcpy(dictionary[line_num].word, ptr);
+				ptr = strtok(NULL, "");
+
+				strcpy(dictionary[line_num].meaning, ptr);//ptr 출력
+
+				line_num++;
+				ptr = strtok(NULL, "");		//NULL을 넣으면 strtok에서 이전에 문자를 자른
+													 //후에 다음 문자의 주소를 반환해줌.
+			}
+		}
+		else {
+			break;
+		}
+
+
+
+
+	}
+	printf("### Dictionary###\n1. Search a Word\n2. List Words\n3. Exit\n\nEnter the command:");
+	scanf("%d", &nn);
+	switch (nn) {
+	case 1:search();
+		 break;
+	case 2:list(); break;
+	case 3:exit(1); break;
+	default: printf("숫자를 잘못 입력하셨습니다."); break;
+
+	}
+
+
+	if (fp == NULL) {
+		fprintf(stderr, "파일%s를 열 수 없어요 \n", fname);
+		exit(1);
+	}
+
+
+
+
+	fclose(fp);
+
+
+	search();
+
+
+
+	printf("complete");
+
+	return 0;
+}
+
+void list() {
+	char ll;
+	for (int i = 0; i < 13047; i++) {
+		
+		printf("%s\t", dictionary[i].word);
+		printf("%s\n", dictionary[i].meaning);
+		if (i>9&&i%10==0) {
+			printf("q를 제외한 키를 누르면 다음 페이지로 넘어갑니다. q를 누르면 종료합니다.\n");
+			scanf("%s", &ll);
+			system("cls");
+			if (ll == 'q') {
+				exit(1); break;
+			}
+		}
+		
+	}
+}
+
+void search() {
+	printf("Enter the word to search :");
+	scanf("%s", &word);
+	int i;
+	for (i = 0; i < strlen(word); i++)
 	{
 		if (isupper(word[i]))
 		{
 			word[i] = tolower(word[i]);
 		}
-		
+
 	}
-	fp = fopen(fname, "r");
-	if (fp == NULL) {
-		fprintf(stderr, "파일%s를 열 수 없어요 \n", fname);
-		exit(1);
-	}
-	char* ptr=0;
-	int listt[2];
-	
-	while (fgets(buffer, 300, fp)) {
-		line_num++;
-		
-		if (strstr(buffer, word))//문자열 찾아주는 함수
-			* ptr = strtok(buffer, "	");
-		int kk=0;
-		while (ptr != NULL)               // 자른 문자열이 나오지 않을 때까지 반복
-		{
-			
-			listt[kk] = ptr;
-			kk++;
+	char kk;
+	for (int i = 0; i < line_num; i++) {
+		if (strstr(dictionary[i].word, word)) {
+
+			printf("%s\t", dictionary[i].word);
+			printf("%s\n", dictionary[i].meaning);
+
 		}
-		strcpy(dictionary[ff].word, listt[0]);
-		strcpy(dictionary[ff].meaning, listt[1]);
-		ff++;
-			printf("%s ", dictionary[ff-1].word);
-
 	}
-
+	printf("Do you want to search another word ? (y / n)\n");
+	scanf("%s", &kk);
+	if (kk == 'y') {
 	
-	fclose(fp);
-	puts("complete");
-
-	return 0;
+		search();
+	}
+	else { exit(1); }
 }
-
