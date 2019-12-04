@@ -4,7 +4,7 @@
 #include <string.h>
 #include<windows.h>
 #include <ctype.h>
-
+#include<time.h>
 
 
 #define MAX_WORDLEN 9999
@@ -18,13 +18,16 @@ typedef struct _word {
 } Sword;
 
 Sword dictionary[MAX_WORDS];
+int wrong[10];
+int wrong_num[10];
 
 char buffer[300], word[20];
 int nwords = 0;
 int ff = 0;
-
+int Lsearch(int arr[],int kk);
 void list();
 void search();
+void game();
 int line_num = 0;
 int main() {
 	int nn;
@@ -65,13 +68,14 @@ int main() {
 
 
 	}
-	printf("### Dictionary###\n1. Search a Word\n2. List Words\n3. Exit\n\nEnter the command:");
+	printf("### Dictionary###\n1. Search a Word\n2. List Words\n3. Word Game - Find Meaning\n0. Exit\n\nEnter the command:");
 	scanf("%d", &nn);
 	switch (nn) {
 	case 1:search();
 		 break;
 	case 2:list(); break;
-	case 3:exit(1); break;
+	case 3: game(); break;
+	case 0:exit(1); break;
 	default: printf("숫자를 잘못 입력하셨습니다."); break;
 
 	}
@@ -143,4 +147,166 @@ void search() {
 		search();
 	}
 	else { exit(1); }
+}
+void game() {
+
+	srand(time(NULL));
+	int random;
+	int arr[10] = { 0, };
+	int kk;
+	int hh=1;
+	int random1;
+	int random2;
+	int random3;
+	int ff=1;
+	int oo = 0;
+	int count = 0;
+	int kkk=0;
+	char answer;
+	
+	while (1) {
+		
+		kk = rand() % 13047;
+		random1 = rand() % 13047;
+		random2 = rand() % 13047;
+		random3 = rand() % 13047;
+		
+		int index;
+		index = Lsearch(arr,kk);
+		
+		if (oo == 0) {
+			printf("\n%d. %s\n\n", ff, dictionary[kk].word);
+			printf("a. %s\n", dictionary[random1].meaning);
+			printf("b. %s\n", dictionary[kk].meaning);
+			printf("c. %s\n", dictionary[random2].meaning);
+			printf("d. %s\n\n", dictionary[random3].meaning);
+			printf("Answer: ");
+			scanf("%s", &answer);
+			if (answer == 'b') {
+				count = count + 10;
+				kkk++;
+			}
+			else {
+				wrong[ff-1] = kk;
+				wrong_num[ff - 1] = hh;
+			}
+			ff++;
+			oo++;
+			hh++;
+			arr[ff - 2] = kk;
+		}
+		if (index == -1) {
+			if (ff <= 10) {
+				if (ff % 4 == 0) {
+
+					printf("\n%d. %s\n\n", ff, dictionary[kk].word);
+					printf("a. %s\n", dictionary[random1].meaning);
+					printf("b. %s\n", dictionary[random2].meaning);
+					printf("c. %s\n", dictionary[kk].meaning);
+					printf("d. %s\n\n", dictionary[random3].meaning);
+					ff++;
+					hh++;
+					printf("Answer: ");
+					scanf("%s", &answer);
+					if (answer == 'c') {
+						count = count + 10;
+						kkk++;
+					}
+					else {
+						wrong[ff-1] = kk;
+						wrong_num[ff - 1] = hh;
+					}
+					arr[ff - 2] = kk;
+				}
+				else if (ff % 4 == 1) {
+
+					printf("\n%d. %s\n\n", ff, dictionary[kk].word);
+					printf("a. %s\n", dictionary[random1].meaning);
+					printf("b. %s\n", dictionary[random3].meaning);
+					printf("c. %s\n", dictionary[random2].meaning);
+					printf("d. %s\n\n", dictionary[kk].word);
+					ff++;
+					hh++;
+					printf("Answer: ");
+					scanf("%s", &answer);
+					if (answer == 'd') {
+						count = count + 10;
+						kkk++;
+					}
+					else {
+						wrong[ff-1] = kk;
+						wrong_num[ff - 1] = hh;
+					}
+
+					arr[ff - 2] = kk;
+				}
+				else if (ff % 4 == 2) {
+
+					printf("\n%d. %s\n\n", ff, dictionary[kk].word);
+					printf("a. %s\n", dictionary[kk].meaning);
+					printf("b. %s\n", dictionary[random1].meaning);
+					printf("c. %s\n", dictionary[random2].meaning);
+					printf("d. %s\n\n", dictionary[random3].meaning);
+					printf("Answer: ");
+					scanf("%s", &answer);
+					if (answer == 'a') {
+						count = count + 10;
+						kkk++;
+					}
+					else {
+						wrong[ff-1] = kk;
+						wrong_num[ff - 1] = hh;
+					}
+					ff++;
+					hh++;
+					arr[ff - 2] = kk;
+				}
+				else if (ff % 4 == 3) {
+
+					printf("\n%d. %s\n\n", ff, dictionary[kk].word);
+					printf("a. %s\n", dictionary[random1].meaning);
+					printf("b. %s\n", dictionary[kk].meaning);
+					printf("c. %s\n", dictionary[random2].meaning);
+					printf("d. %s\n\n", dictionary[random3].meaning);
+					printf("Answer: ");
+					scanf("%s", &answer);
+					if (answer == 'b') {
+						count = count + 10;
+						kkk++;
+					}
+					else {
+						wrong[ff-1] = kk;
+						wrong_num[ff - 1] = hh;
+					}
+					ff++;
+					hh++;
+					arr[ff - 2] = kk;
+				}
+			}
+			else {
+				printf("Score: %d (correct %d out of 10 problems)", count, kkk);
+				printf("\n\nWrong problems\n\n");
+				for (int i = 0; i < hh; i++) {
+					if (wrong_num[i] != 0) {
+						printf("%d. %s\t%s\n", wrong_num[i], dictionary[wrong[i]].word, dictionary[wrong[i]].meaning);
+					}
+				}
+
+					exit(1); break;
+			}
+				
+			}
+
+		}
+	
+}
+
+int Lsearch(int arr[],int kk){
+	
+	for (int i = 0; i < strlen(arr);i++) {
+		if (kk != arr[i]) {
+			return -1;
+		}
+		
+	}
 }
