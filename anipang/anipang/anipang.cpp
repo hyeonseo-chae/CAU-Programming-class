@@ -77,15 +77,16 @@ void testRemove(Board *board)
     }
 }
 
-void RemoveUp(Board* board,int f,int tile[2],int move[2]) {
-	int i,k, n = 3;
+void RemoveDown(Board* board, int f, int tile[2], int move[2]) {
+	int i, k, n = 3;
 	k = tile[1] + move[1];
-	for (k = 0; k < n; k++)
-		board->tiles[5-k][f] = 0;  // 타일 값이 0일 경우 폭발 그림이 출력된다
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+	board->tiles[tile[1] + move[1] + 1][tile[0] + move[0]] = 0;
+	board->tiles[tile[1] + move[1] + 2][tile[0] + move[0]] = 0;
 	display();  // 화면에 변화된 보드를 그린다
 	Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
 	for (i = 0; i < n; i++) {
-		for (k = 5; k > 0; k--) {
+		for (k = tile[1] + move[1] + 2; k > 0; k--) {
 			board->tiles[k][f] = board->tiles[k - 1][f];
 		}
 		board->tiles[0][f] = rand() % board->nitems + 1;
@@ -94,16 +95,93 @@ void RemoveUp(Board* board,int f,int tile[2],int move[2]) {
 		Sleep(100); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
 	}
 }
-void RemoveCross(Board* board, int f, int tile[2], int move[2]) {
+	void RemoveUp(Board * board, int f, int tile[2], int move[2]) {
+		int i, k, n = 3;
+		k = tile[1] + move[1];
+		board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+		board->tiles[tile[1] + move[1] - 1][tile[0] + move[0]] = 0;
+		board->tiles[tile[1] + move[1] - 2][tile[0] + move[0]] = 0;
+		display();  // 화면에 변화된 보드를 그린다
+		Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+		for (i = 0; i < n; i++) {
+			for (k = tile[1] + move[1]; k > 0; k--) {
+				board->tiles[k][f] = board->tiles[k - 1][f];
+			}
+			board->tiles[0][f] = rand() % board->nitems + 1;
+			display();  // 화면에 변화된 보드를 그린다. 이 함수를 호출하지 않으면 
+						// 내용이 변화되어도 화면에 나타나지 않는다.
+			Sleep(100); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+		}
+	}
+
+	void RemoveUpM(Board* board, int f, int tile[2], int move[2]) {
+		int i, k, n = 3;
+		k = tile[1] + move[1];
+		board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+		board->tiles[tile[1] + move[1] - 1][tile[0] + move[0]] = 0;
+		board->tiles[tile[1] + move[1] +1][tile[0] + move[0]] = 0;
+		display();  // 화면에 변화된 보드를 그린다
+		Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+		for (i = 0; i < n; i++) {
+			for (k = tile[1] + move[1]+1; k > 0; k--) {
+				board->tiles[k][f] = board->tiles[k - 1][f];
+			}
+			board->tiles[0][f] = rand() % board->nitems + 1;
+			display();  // 화면에 변화된 보드를 그린다. 이 함수를 호출하지 않으면 
+						// 내용이 변화되어도 화면에 나타나지 않는다.
+			Sleep(100); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+		}
+	}
+	
+void RemoveCrossM(Board* board, int f, int tile[2], int move[2]) {
 	int i, k, n = 3;
-	k = tile[1] + move[1];
-	for (k = 0; k < n; k++)
-		board->tiles[f][5 - k] = 0;  // 타일 값이 0일 경우 폭발 그림이 출력된다
+	k = tile[0] + move[0];
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] - 1 + move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] +1 + move[0]] = 0;
 	display();  // 화면에 변화된 보드를 그린다
 	Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
 	for (i = 0; i < n; i++) {
-		for (k = 5; k > 0; k--) {
+		for (k = tile[0] + move[0]+1; k > 0; k--) {
 			board->tiles[f][k] = board->tiles[f][k-1];
+		}
+		board->tiles[f][0] = rand() % board->nitems + 1;
+		display();  // 화면에 변화된 보드를 그린다. 이 함수를 호출하지 않으면 
+					// 내용이 변화되어도 화면에 나타나지 않는다.
+		Sleep(100); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+	}
+}
+
+void RemoveCrossL(Board* board, int f, int tile[2], int move[2]) {
+	int i, k, n = 3;
+	k = tile[0] + move[0];
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] -1+ move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] - 2 + move[0]] = 0;
+	display();  // 화면에 변화된 보드를 그린다
+	Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+	for (i = 0; i < n; i++) {
+		for (k = tile[0] + move[0] ; k > 0; k--) {
+			board->tiles[f][k] = board->tiles[f][k - 1];
+		}
+		board->tiles[f][0] = rand() % board->nitems + 1;
+		display();  // 화면에 변화된 보드를 그린다. 이 함수를 호출하지 않으면 
+					// 내용이 변화되어도 화면에 나타나지 않는다.
+		Sleep(100); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+	}
+}
+
+void RemoveCrossR(Board* board, int f, int tile[2], int move[2]) {
+	int i, k, n = 3;
+	k = tile[0] + move[0];
+	board->tiles[tile[1] + move[1]][tile[0] + move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] + 1 + move[0]] = 0;
+	board->tiles[tile[1] + move[1]][tile[0] + 2 + move[0]] = 0;
+	display();  // 화면에 변화된 보드를 그린다
+	Sleep(300); // 너무 빠르면 과정이 안보이므로 적당한 시간동안 기다린다
+	for (i = 0; i < n; i++) {
+		for (k = tile[0] + move[0]+2; k > 0; k--) {
+			board->tiles[f][k] = board->tiles[f][k - 1];
 		}
 		board->tiles[f][0] = rand() % board->nitems + 1;
 		display();  // 화면에 변화된 보드를 그린다. 이 함수를 호출하지 않으면 
@@ -116,16 +194,16 @@ void check_three(Board* board,int tile[2],int move[2]) {
 	
 	if (board->tiles[tile[1]+move[1]][tile[0]+move[0]] == board->tiles[tile[1] + move[1]][tile[0] - 1+move[0]] && board->tiles[tile[1] + move[1]][tile[0]-1+move[0]] == board->tiles[tile[1] + move[1]][tile[0]-2+move[0]]) {
 		printf("왼쪽 3개 일치합니다.\n"); // 왼쪽으로 드래그 후 드래그 기준 왼쪽 3개 판단
-		RemoveCross(board, tile[1] + move[1], tile, move);
+		RemoveCrossL(board, tile[1] + move[1], tile, move);
 		
 	}
 	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]][tile[0] +1 + move[0]] && board->tiles[tile[1] + move[1]][tile[0] +1 + move[0]] == board->tiles[tile[1] + move[1]][tile[0] +2 + move[0]]) {
 		printf("오른쪽 3개 일치합니다.\n"); // 오른쪽으로 드래그 후 드래그 기준 오른쪽 3개 판단
-		RemoveCross(board, tile[1] + move[1], tile, move);
+		RemoveCrossR(board, tile[1] + move[1], tile, move);
 	}
 	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]][tile[0] + move[0]+1] && board->tiles[tile[1] + move[1]][tile[0] -1 + move[0]] == board->tiles[tile[1] + move[1]][tile[0] + move[0]]) {
 		printf("가로 가운대 3개 일치합니다.\n"); // 위아래로 드래그 후 드래그 기준 가운데 3개 판단
-		RemoveCross(board, tile[1] + move[1], tile, move);
+		RemoveCrossM(board, tile[1] + move[1], tile, move);
 	}
 	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]-1][tile[0]+ move[0]] && board->tiles[tile[1] + move[1]-1][tile[0] + move[0]] == board->tiles[tile[1] + move[1]-2][tile[0] + move[0]]) {
 		printf("위쪽 3개 일치합니다.\n"); // 옆으로 드래그 후 드래그 기준 위쪽 3개 판단
@@ -133,11 +211,11 @@ void check_three(Board* board,int tile[2],int move[2]) {
 	}
 	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1]+1][tile[0] + move[0]] && board->tiles[tile[1] + move[1]+1][tile[0] + move[0]] == board->tiles[tile[1] + move[1]+2][tile[0] + move[0]]) {
 		printf("아래쪽 3개 일치합니다.\n"); //옆으로 드래그 후 드래그 기준 아래 3개 판단
-		RemoveUp(board, tile[0] + move[0], tile, move);
+		RemoveDown(board, tile[0] + move[0], tile, move);
 	}
 	else if (board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1] + 1][tile[0] + move[0]] && board->tiles[tile[1] + move[1]][tile[0] + move[0]] == board->tiles[tile[1] + move[1] +-1][tile[0] + move[0]]) {
 		printf("세로 가운데 3개 일치합니다.\n"); //옆 드래그 후 드래그 기준 세로 가운데 3개 판단
-		RemoveUp(board, tile[0] + move[0],  tile, move);
+		RemoveUpM(board, tile[0] + move[0],  tile, move);
 	}
 	else {
 		Sleep(100);
