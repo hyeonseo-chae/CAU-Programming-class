@@ -1,2 +1,6 @@
 ﻿  anipang.cpp
-  anipang.vcxproj -> C:\Users\Galaxy Book S\Desktop\CAU-Programming-class\anipang\Debug\anipang.exe
+anipang.obj : error LNK2019: "void __cdecl gameInit(struct _board *)" (?gameInit@@YAXPAU_board@@@Z) 외부 기호(참조 위치: _main 함수)에서 확인하지 못했습니다.
+draw.obj : error LNK2001: "void __cdecl gameInit(struct _board *)" (?gameInit@@YAXPAU_board@@@Z) 외부 기호를 확인할 수 없습니다.
+    정의되었으며 잠재적으로 일치할 수 있는 기호에 대한 힌트:
+      "void __cdecl gameInit(struct _board *,int * const,int * const)" (?gameInit@@YAXPAU_board@@QAH1@Z)
+C:\Users\Administrator\Desktop\CAU-Programming-class\anipang\Debug\anipang.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.
