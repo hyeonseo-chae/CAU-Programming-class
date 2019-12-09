@@ -1,0 +1,12 @@
+﻿  소스.cpp
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(133): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(160): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(161): warning C4101: 'random' :참조되지 않은 지역 변수입니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(314): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(328): warning C4473: 'scanf_s': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+  c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(328): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 2개 필요하지만 1개가 제공되었습니다.
+  c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(328): note: 누락된 variadic 인수 2이(가) 서식 문자열 '%c'에 필요합니다.
+  c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(328): note: 이 인수는 버퍼 크기로 사용됩니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(337): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\sw교육지원팀\source\repos\project3\project3\소스.cpp(343): warning C4715: 'Lsearch': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  Project3.vcxproj -> C:\Users\SW교육지원팀\source\repos\Project3\Debug\Project3.exe
