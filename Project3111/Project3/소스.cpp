@@ -322,7 +322,7 @@ void hangman() {
 		printf("-");
 	}
 	gotoxy(10, 16);
-	printf("Misses:%s",misses);
+	printf("Misses:");
 	gotoxy(10, 17);
 	printf("Guess : ");
 	scanf_s("%c", &d);

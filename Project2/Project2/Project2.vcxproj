@@ -23,7 +23,11 @@
     <Text Include="word_smart1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="사전.c" />
+    <ClCompile Include="hangdraw.cpp" />
+    <ClCompile Include="사전.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hangdraw.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

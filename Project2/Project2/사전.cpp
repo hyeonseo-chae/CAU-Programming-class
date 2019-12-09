@@ -14,7 +14,7 @@
 
 
 typedef struct _word {
-	char word[MAX_WORDLEN] ;
+	char word[MAX_WORDLEN];
 	char meaning[MAX_MEANING];
 } Sword;
 
@@ -25,7 +25,7 @@ int wrong_num[10];
 char buffer[300], word[20];
 int nwords = 0;
 int ff = 0;
-int Lsearch(char arr[],int kk);
+int Lsearch(char arr[], int kk);
 void list();
 void search();
 void game();
@@ -38,9 +38,9 @@ char fname[30] = "voca13000.txt";
 int main() {
 	int nn;
 
-	
+
 	fp = fopen(fname, "r");
-	
+
 
 
 	char* ptr;
@@ -81,7 +81,7 @@ int main() {
 	scanf("%d", &nn);
 	switch (nn) {
 	case 1:search();
-		 break;
+		break;
 	case 2:list(); break;
 	case 3: game(); break;
 	case 4: hangman(); break;
@@ -91,7 +91,7 @@ int main() {
 	}
 
 
-	
+
 
 
 
@@ -99,11 +99,11 @@ int main() {
 	fclose(fp);
 
 
-	search();
 
 
 
-	printf("complete");
+
+
 
 	return 0;
 }
@@ -111,10 +111,10 @@ int main() {
 void list() {
 	char ll;
 	for (int i = 0; i < 13047; i++) {
-		
+
 		printf("%s\t", dictionary[i].word);
 		printf("%s\n", dictionary[i].meaning);
-		if (i>9&&i%10==0) {
+		if (i > 9 && i % 10 == 0) {
 			printf("q를 제외한 키를 누르면 다음 페이지로 넘어갑니다. q를 누르면 종료합니다.\n");
 			scanf("%s", &ll);
 			system("cls");
@@ -122,7 +122,7 @@ void list() {
 				exit(1); break;
 			}
 		}
-		
+
 	}
 }
 
@@ -150,7 +150,7 @@ void search() {
 	printf("Do you want to search another word ? (y / n)\n");
 	scanf("%s", &kk);
 	if (kk == 'y') {
-	
+
 		search();
 	}
 	else { exit(1); }
@@ -161,26 +161,26 @@ void game() {
 	int random;
 	char arr[10] = { 0, };
 	int kk;
-	int hh=1;
+	int hh = 1;
 	int random1;
 	int random2;
 	int random3;
-	int ff=1;
+	int ff = 1;
 	int oo = 0;
 	int count = 0;
-	int kkk=0;
+	int kkk = 0;
 	char answer;
-	
+
 	while (1) {
-		
+
 		kk = rand() % 13047;
 		random1 = rand() % 13047;
 		random2 = rand() % 13047;
 		random3 = rand() % 13047;
-		
+
 		int index;
-		index = Lsearch(arr,kk);
-		
+		index = Lsearch(arr, kk);
+
 		if (oo == 0) {
 			printf("\n%d. %s\n\n", ff, dictionary[kk].word);
 			printf("a. %s\n", dictionary[random1].meaning);
@@ -194,7 +194,7 @@ void game() {
 				kkk++;
 			}
 			else {
-				wrong[ff-1] = kk;
+				wrong[ff - 1] = kk;
 				wrong_num[ff - 1] = hh;
 			}
 			ff++;
@@ -220,7 +220,7 @@ void game() {
 						kkk++;
 					}
 					else {
-						wrong[ff-1] = kk;
+						wrong[ff - 1] = kk;
 						wrong_num[ff - 1] = hh;
 					}
 					arr[ff - 2] = kk;
@@ -241,7 +241,7 @@ void game() {
 						kkk++;
 					}
 					else {
-						wrong[ff-1] = kk;
+						wrong[ff - 1] = kk;
 						wrong_num[ff - 1] = hh;
 					}
 
@@ -261,7 +261,7 @@ void game() {
 						kkk++;
 					}
 					else {
-						wrong[ff-1] = kk;
+						wrong[ff - 1] = kk;
 						wrong_num[ff - 1] = hh;
 					}
 					ff++;
@@ -282,7 +282,7 @@ void game() {
 						kkk++;
 					}
 					else {
-						wrong[ff-1] = kk;
+						wrong[ff - 1] = kk;
 						wrong_num[ff - 1] = hh;
 					}
 					ff++;
@@ -299,24 +299,88 @@ void game() {
 					}
 				}
 
-					exit(1); break;
-			}
-				
+				exit(1); break;
 			}
 
 		}
-	
+
+	}
+
 }
 void hangman() {
-	drawHangmanTest();
+	int kk;
+	char d;
+	
+	char* ptr1;
+	char misses[100];
+	srand(time(NULL));
+	kk = rand() % 13047;
+	system("cls");
+	drawHangman(0);
+	gotoxy(10, 15);
+	printf("Word: ");
+	int ff = strlen(dictionary[kk].word);
+	char* dd;
+	int good = 0;
+	dd = (char*)malloc(sizeof(char) * strlen(dictionary[kk].word));
+	for (int i = 0; i < ff; i++) {
+		dd[i] = '-';
+		
+	}
+	puts(dd);
+	int gg = 0;
+	gotoxy(10, 16);
+	printf("Misses:");
+	gotoxy(10, 17);
+	printf("Guess : ");
+	while (1) {
+		gotoxy(18, 17);
+		scanf("%s", &d);
+
+		ptr1 = strchr(dictionary[kk].word, d);
+
+		if (ptr1) {
+			gotoxy(10, 15);
+			printf("Word: ");
+			for (int i = 0; i < ff; i++) {
+				if (i == ptr1 - dictionary[kk].word) {
+				
+					dd[i] = d;
+					good++;
+				}
+				
+			}
+			
+			
+		}
+		else {
+			misses[gg] = d;
+			gg++;
+			drawHangman(gg);
+		}
+		gotoxy(10, 16);
+		printf("Misses:");
+		puts(misses);
+		gotoxy(16, 15);
+		for (int i = 0; i < ff; i++) {
+			printf("%c", dd[i]);
+		}
+		if (gg == 8) {
+			break;
+		}
+		else if (good == strlen(dictionary[kk].word)) {
+			drawHangman(Win);
+		}
+	}
+
 }
 
-int Lsearch(char arr[],int kk){
-	
-	for (int i = 0; i < strlen(arr);i++) {
+int Lsearch(char arr[], int kk) {
+
+	for (int i = 0; i < strlen(arr); i++) {
 		if (kk != arr[i]) {
 			return -1;
 		}
-		
+
 	}
 }

@@ -1,0 +1,11 @@
+﻿  사전.cpp
+C:\Users\CSE6P44\Desktop\CAU-Programming-class\Project2\Project2\사전.cpp(160,12): warning C4244:  '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\CSE6P44\Desktop\CAU-Programming-class\Project2\Project2\사전.cpp(161,6): warning C4101:  'random' :참조되지 않은 지역 변수입니다.
+C:\Users\CSE6P44\Desktop\CAU-Programming-class\Project2\Project2\사전.cpp(316,12): warning C4244:  '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\CSE6P44\Desktop\CAU-Programming-class\Project2\Project2\사전.cpp(322,38): warning C4267:  '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다.
+  2 of 21 functions ( 9.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  Project2.vcxproj -> C:\Users\CSE6P44\Desktop\CAU-Programming-class\Project2\x64\Release\Project2.exe
